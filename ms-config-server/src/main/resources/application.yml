@@ -1,0 +1,20 @@
+server:
+  port: 6060
+
+spring:
+  application:
+    name: ms-config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/jakemateharol/tarea1.git
+          searchPaths:
+            - config-data
+          default-label: main
+
+  security:
+    user:
+      name: root
+      password: 123456
