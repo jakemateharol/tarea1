@@ -7,24 +7,36 @@ spring:
 
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: ms-cliente-service
-          uri: lb://ms-cliente-service
-          predicates:
-            - Path=/clientes/**
-        - id: ms-pedido-service
-          uri: lb://ms-pedido-service
-          predicates:
-            - Path=/pedidos/**
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
 
+          routes:
+            - id: ms-cliente-service
+              uri: lb://ms-cliente-service
+              predicates:
+                - Path=/clientes/**
+
+            - id: ms-pedido-service
+              uri: lb://ms-pedido-service
+              predicates:
+                - Path=/pedidos/**
 
 eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8095/eureka}
+
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: clientes
+        url: /clientes/v3/api-docs
+      - name: pedidos
+        url: /pedidos/v3/api-docs
